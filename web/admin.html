@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>考勤系统管理</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <div class="site-bg"></div>
+        <div class="site-bg-overlay"></div>
+
+<!-- 顶部信息栏 -->
+        <div class="top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                            <p class="phone-info">
+                                欢迎管理员
+                            </p>  
+                    </div>
+<!-- 退出按钮 -->
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="social-icons">
+                            <a href="login.html">
+                                <button type="button" style="background-color: #f30a0a;
+                                border-radius: 25px;
+                                border: none;
+                                color: white;
+                                padding: 5px 25px;
+                                text-align: center;
+                                text-decoration: none;
+                                display: inline-block;
+                                font-size: 16px;
+                                position:absolute;
+                                left:95%;
+                                top:3%;"
+                                >
+                                    退出
+                                </button>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+ 页面缩小后功能键
+        <div class="visible-xs visible-sm responsive-menu">
+            <a href="#" class="toggle-menu">
+                <i class="fa fa-bars"></i> Show Menu
+            </a>
+            <div class="show-menu">
+                <ul class="main-menu">
+                    <li>
+                        <a class="show-1 active homebutton" href="#" onclick="ajax1()"><i class="fa fa-users"></i>用户信息</a>
+                    </li>
+                    <li>
+                        <a class="show-2 aboutbutton" href="#" onclick="ajax2()"><i class="fa fa-bar-chart"></i>打卡情况</a>
+                    </li>
+                    <li>
+                        <a class="show-3 recordbutton" href="#" onclick="ajax3()"><i class="fa fa-plus"></i>注册申请</a>
+                    </li>
+                    <li>
+                        <a class="show-5 contactbutton" href="#" onclick="ajax4()"><i class="fa fa-table"></i>补卡申请</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+       
+        <div class="container" id="page-content">
+            <div class="row"> 
+                <div class="col-md-9 col-sm-12 content-holder">
+                    <!-- CONTENT -->
+                    <div id="menu-container">
+                        
+<!-- 用户信息 -->
+                        <div id="menu-1" class="homepage home-section text-center">
+                            <div class="box-content">
+                                <h3 class="widget-title">用户信息</h3>
+                                <form action="http://localhost:8090/Attendance_war_exploded/AdminServlet?method=logoutUser" method="post">
+                                    <input type="text" name="username" placeholder="请输入需要注销的用户名" style="width: 60%" required>
+                                    <button type="submit" style="background-color: #ac2925;border-radius: 10px">注销</button>
+                                </form>
+                                <table>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>姓名</th>
+                                        <th>密码</th>
+                                        <th>性别</th>
+                                        <th>邮箱</th>
+                                        <th>账号状态</th>
+                                    </tr>
+                                    <tr id="userinfo">
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+<!-- 打卡记录 -->
+                        <div id="menu-2" class="content about-section">
+                            <div class="box-content">
+                                <h3 class="widget-title">打卡情况</h3>
+                                <table width="100%">
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>总打卡天数</th>
+                                        <th>全勤天数</th>
+                                        <th>缺勤天数</th>
+                                    </tr>
+                                    <tr id="attendance">
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+<!-- 注册申请 -->
+                        <div id="menu-3" class="content gallery-section">
+                            <div class="box-content">
+                                <h3 class="widget-title">注册申请</h3>
+                                <form action="http://localhost:8090/Attendance_war_exploded/AdminServlet?method=agreeToApply" method="post">
+                                    <input type="text" name="username" placeholder="请输入需要激活的用户名" style="width: 60%" required>
+                                    <button type="submit" style="background-color: #2cf31c;border-radius: 10px">激活</button>
+                                </form>
+                                <table width="100%" >
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>姓名</th>
+                                        <th>密码</th>
+                                        <th>性别</th>
+                                        <th>邮箱</th>
+                                    </tr>
+                                    <tr id="userApplication">
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+<!-- 补卡申请 -->
+                       <div id="menu-4" class="content contact-section">
+                            <div class="box-content">
+                                <h3 class="widget-title">补卡申请</h3>
+                                <form action="http://localhost:8090/Attendance_war_exploded/AdminServlet?method=agreeApplication" method="post">
+                                    <input type="text" name="username" placeholder="同意申请的用户名" style="width: 30%" required>
+                                    <input type="date" name="date" placeholder="同意申请的日期" style="width: 30%" required>
+                                    <select name="time">
+                                        <option value="08:00">上班</option>
+                                        <option value="18:00">下班</option>
+                                    </select>
+                                    <button type="submit" style="background-color: #2cf31c;border-radius: 10px">同意</button>
+                                </form>
+                                <form action="http://localhost:8090/Attendance_war_exploded/AdminServlet?method=refuseApplication" method="post">
+                                    <input type="text" name="username" placeholder="拒绝申请的用户名" style="width: 30%" required>
+                                    <input type="date" name="date" placeholder="拒绝申请的日期" style="width: 30%" required>
+                                    <select name="time">
+                                        <option value="08:00">上班</option>
+                                        <option value="18:00">下班</option>
+                                    </select>
+                                    <button type="submit" style="background-color: #ef0619;border-radius: 10px">拒绝</button>
+                                </form>
+                                <table width="100%" >
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>日期</th>
+                                        <th>时间</th>
+                                        <th>理由</th>
+                                    <tr id="application">
+                                    </tr>
+                                </table>
+
+                            </div>  
+                        </div>
+
+                    </div>
+                </div>
+
+<!--左侧功能按钮 -->
+                <div class="col-md-3 hidden-sm">
+                    
+                    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+                        <ul class="main-menu">
+                            <li>
+                                <a class="show-1 active homebutton" href="" onclick="ajax1()"><i class="fa fa-users"></i>用户信息</a>
+                            </li>
+                            <li>
+                                <a class="show-2 aboutbutton" href="#" onclick="ajax2()"><i class="fa fa-bar-chart"></i>打卡情况</a>
+                            </li>
+                            <li>
+                                <a class="show-3 projectbutton" href="#" onclick="ajax3()"><i class="fa fa-plus"></i>注册申请</a>
+                            </li>
+                            <li>
+                                <a class="show-5 contactbutton" href="#" onclick="ajax4()"><i class="fa fa-table"></i>补卡申请</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+<!-- 底部版权说明-->
+        <div class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Copyright &copy; 2084 Company Name | More Templates <a href="https://www.webmoban.net" target="_blank" title="网站模板">网站模板</a> - Collect from <a href="https://www.webmoban.net" title="网页模板" target="_blank">网页模板</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+//获取用户信息
+        function ajax1(){
+            $.ajax({
+                url: "http://localhost:8090/Attendance_war_exploded/AdminServlet?method=queryAllUserInfo",
+                data:{},
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    /*这个方法里是ajax发送请求成功之后执行的代码*/
+                    userinfoShowData(data);//数据展示
+                },
+                error: function(msg){
+                    alert("ajax连接异常："+msg);
+                }
+            });
+        };
+        //展示数据
+        function userinfoShowData(data) {
+
+            var str = "";//定义用于拼接的字符串
+
+            for (var i = 0; i < data.length; i++) {
+            //拼接表格的行和列
+            str =str+
+                "<tr>" +
+                "<td>" + data[i].username + "</td>" +
+                "<td>" + data[i].name + "</td>" +
+                "<td>" + data[i].password +"</td>" +
+                "<td>" + data[i].sex +"</td>" +
+                "<td>" + data[i].email +"</td>" +
+                "<td>" + data[i].status +"</td>" +
+                "</tr>";
+            //追加到table中
+            }
+            $("#userinfo").replaceWith(str);
+        }
+
+//获取用户打卡信息
+        function ajax2(){
+            $.ajax({
+                url: "http://localhost:8090/Attendance_war_exploded/AdminServlet?method=queryCheckinInfo",
+                data:{},
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    /*这个方法里是ajax发送请求成功之后执行的代码*/
+                    attendanceShowData(data);//数据展示
+                },
+                error: function(msg){
+                    alert("ajax连接异常："+msg);
+                }
+            });
+            };
+        //展示数据
+            function attendanceShowData(data) {
+                var str = "";//定义用于拼接的字符串
+                for (var i = 0; i < data.length; i++) {
+                    //拼接表格的行和列
+                    str =str+
+                        "<tr>" +
+                        "<td>" + data[i].username + "</td>" +
+                        "<td>" + data[i].totalCount + "</td>" +
+                        "<td>" + data[i].full +"</td>" +
+                        "<td>" + data[i]. nonFull +"</td>" +
+                        "</tr>";
+                }
+                $("#attendance").replaceWith(str);
+            }
+//获取注册信息
+        function ajax3(){
+            $.ajax({
+                url: "http://localhost:8090/Attendance_war_exploded/AdminServlet?method=displayUserByStatus",
+                data:{},
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    /*这个方法里是ajax发送请求成功之后执行的代码*/
+                    displayUserByStatusShowData(data);//数据展示
+                },
+                error: function(msg){
+                    alert("ajax连接异常："+msg);
+                }
+            });
+        };
+        //展示数据
+        function displayUserByStatusShowData(data) {
+            var str = "";//定义用于拼接的字符串
+            for (var i = 0; i < data.length; i++) {
+                //拼接表格的行和列
+                str =str+
+                    "<tr>" +
+                    "<td>" + data[i].username + "</td>" +
+                    "<td>" + data[i].password + "</td>" +
+                    "<td>" + data[i].name +"</td>" +
+                    "<td>" + data[i].sex +"</td>" +
+                    "<td>" + data[i].email +"</td>" +
+                    "</tr>";
+            }
+            //追加到table中
+            $("#userApplication").replaceWith(str);
+        }
+//补卡申请
+        function ajax4(){
+            $.ajax({
+                url: "http://localhost:8090/Attendance_war_exploded/AdminServlet?method=displayApplication",
+                data:{},
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    /*这个方法里是ajax发送请求成功之后执行的代码*/
+                    displayApplicationShowData(data);//数据展示
+                },
+                error: function(msg){
+                    alert("ajax连接异常："+msg);
+                }
+            });
+        };
+        //展示数据
+        function displayApplicationShowData(data) {
+            var str = "";//定义用于拼接的字符串
+            for (var i = 0; i < data.length; i++) {
+                //拼接表格的行和列
+                str =str+
+                    "<tr>" +
+                    "<td>" + data[i].username + "</td>" +
+                    "<td>" + data[i].date + "</td>" +
+                    "<td>" + data[i].time +"</td>" +
+                    "<td>" + data[i].reason +"</td>" +
+                    "</tr>";
+            }
+            //追加到table中
+            $("#application").replaceWith(str);
+        }
+    </script>
+</html>

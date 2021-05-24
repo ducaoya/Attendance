@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>注册</title>
+</head>
+<body>
+    <a href="login.html">
+        <button type="button" style="background-color: #32be8f;
+    border-radius: 25px;
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    position:absolute;
+    left:90%;
+    top:5%;"
+    >
+    登录
+    </button>
+    </a>
+    
+    <img src="img/bg.png" alt="" class="wave">
+    <div class="container">
+        <div class="img">
+            <img src="img/img-3.svg" alt="">
+        </div>
+        <div class="login-box">
+            <form action="http://localhost:8090/Attendance_war_exploded/RegisterUserServlet?method=findbyAddUser" id="from" method="post">
+                <img src="img/logo.png" alt="" class="avatar">
+                <h2>Welcome</h2>
+                <!--用户名-->
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div>
+                        <input id="username" name="username" type="text" class="input" placeholder="用户名" required>
+                    </div>
+                </div>
+                <!--姓名-->
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fa fa-id-card-o"></i>
+                    </div>
+                    <div>
+                        <input id="name" name="name" type="text" class="input" placeholder="姓名" required>
+                    </div>
+                </div>
+                <!--密码-->
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div>
+                        <input id="password" name="password" type="password" class="input" placeholder="密码" required>
+                    </div>
+                </div>
+                <!--性别-->
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fa fa-venus-mars"></i>
+                    </div>
+                    <div>
+                        <input id="sex" name="sex" type="text" class="input" placeholder="男|女" required pattern="男|女">
+                    </div>
+                </div>
+                <!--邮箱-->
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <div>
+                        <input id="email" name="email" type="email" class="input" placeholder="邮箱" required>
+                    </div>
+                </div>
+                <!--注册按钮-->
+                <button type="submit" class="btn" >注册</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

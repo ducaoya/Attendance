@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>考勤系统</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.3&key=a8e3f1d526511281bac2edf977a6ca03"></script>
+    </head>
+    <body>
+        <div class="site-bg"></div>
+        <div class="site-bg-overlay"></div>
+
+<!-- 顶部信息栏 -->
+        <div class="top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                            <p class="phone-info" style="font-size: 35px;">
+                                欢 迎
+                            </p>  
+                    </div>
+<!-- 退出按钮 -->
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="social-icons">
+                            <a href="login.html">
+                                <button type="button" style="background-color: #f30a0a;
+                                border-radius: 25px;
+                                border: none;
+                                color: white;
+                                padding: 5px 25px;
+                                text-align: center;
+                                text-decoration: none;
+                                display: inline-block;
+                                font-size: 16px;
+                                position:absolute;
+                                left:95%;
+                                top:3%;"
+                                >
+                                    退出
+                                </button>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+<!-- 页面缩小后功能键 -->
+        <div class="visible-xs visible-sm responsive-menu">
+            <a href="#" class="toggle-menu">
+                <i class="fa fa-bars"></i> Show Menu
+            </a>
+            <div class="show-menu">
+                <ul class="main-menu">
+                    <li>
+                        <a class="show-1 active homebutton" href="#"><i class="fa fa-arrow-up"></i>上班打卡</a>
+                    </li>
+                    <li>
+                        <a class="show-2 aboutbutton" href="#"><i class="fa fa-arrow-down"></i>下班打卡</a>
+                    </li>
+                    <li>
+                        <a class="show-3 recordbutton" href="#" onclick="ajax('user4')"><i class="fa fa-line-chart"></i>打卡记录</a>
+                    </li>
+                    <li>
+                        <a class="show-5 contactbutton" href="#"><i class="fa fa-table"></i>补卡申请</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+       
+        <div class="container" id="page-content">
+            <div class="row"> 
+                <div class="col-md-9 col-sm-12 content-holder">
+                    <!-- CONTENT -->
+                    <div id="menu-container">
+                        
+<!-- 上班打卡 -->
+                        <div id="menu-1" class="homepage home-section text-center">
+                            <h1 style="font-size: 30px;">上班打卡</h1>
+                            <div class="welcome-text">
+                                <form action="http://localhost:8090/Attendance_war_exploded/LoginServlet?method=clockinUser" method="post" class="subscribe-form">
+                                    <i class="fa fa-user"></i>
+                                    <input type="text" name="username" placeholder="请输入用户名" required>
+                                    <br>
+                                    <br>
+                            
+                                    <i class="fa fa-calendar-o"></i>
+                                    <input type="date" name="date" required>
+                                    <br>
+                                    <br>
+                                
+                                    <i class="fa fa-clock-o"></i>
+                                    <input type="text" name="time1" id="GoToWorkTime" placeholder="上班打卡时间" value="" required style="width: 45%;">
+                                    <button type="button" onclick="displayTime(1)">获取当前时间</button>
+                                    <br>
+                                    <br>
+                                
+                                    <i class="fa fa-map-marker"></i>
+                                    <input type="text" name="place1" id="place1" placeholder="当前位置" value="" required style="width: 45%;">
+                                    <button type="button" onclick="getLocation(1)">获取当前地点</button>
+                                    <div id="iCenter1" style="width:100px; height: 100px; border:1px #000 solid;margin:20px auto;"></div>
+                                    <br>
+                                    <br>
+                                
+                                    <button type="submit" name="submit" >打卡上班</button>
+                                
+                                </form>
+                            </div>
+                        </div>
+<!-- 下班打卡 -->
+                        <div id="menu-2" class="content about-section">
+                            <div class="off-work">
+                                <h1 style="font-size: 30px;">下班打卡</h1>
+                                <form action="http://localhost:8090/Attendance_war_exploded/LoginServlet?method=clockoutUser" method="post" class="subscribe-form">
+                                    <i class="fa fa-user"></i>
+                                    <input type="text" name="username" placeholder="请输入用户名" required>
+                                    <br>
+                                    <br>
+                            
+                                    <i class="fa fa-calendar-o"></i>
+                                    <input type="date" name="date" placeholder="当前日期" required>
+                                    <br>
+                                    <br>
+                                
+                                    <i class="fa fa-clock-o"></i>
+                                    <input type="text" name="time2" id="OffWorkTime" placeholder="下班打卡时间" value="" required style="width: 45%;">
+                                    <button type="button" onclick="displayTime(2)">获取当前时间</button>
+                                    <br>
+                                    <br>
+                                
+                                    <i class="fa fa-map-marker"></i>
+                                    <input type="text" name="place2" id="place2" placeholder="当前位置" value="" required style="width: 45%;">
+                                    <button type="button" onclick="getLocation(2)">获取当前地点</button>
+                                    <div id="iCenter2" style="width:100px; height: 100px; border:1px #000 solid;margin:20px auto;"></div>
+                                    <br>
+                                    <br>
+                                
+                                    <button type="submit" name="submit" >打卡下班</button>
+                                
+                                </form>
+                            </div>
+                            
+                        </div>
+<!-- 打卡记录 -->
+                        <div id="menu-3" class="content gallery-section">
+                            <div class="box-content">
+                                <h3 class="widget-title">打卡记录</h3>
+                                <table width="100%">
+                                    <tr>
+                                        <th>日期</th>
+                                        <th>上班时间</th>
+                                        <th>上班地点</th>
+                                        <th>下班时间</th>
+                                        <th>下班地点</th>
+                                    </tr>
+                                    <tr id="userAttendance">
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+<!-- 补卡申请 -->
+                       <div id="menu-4" class="content contact-section">
+                            <div class="row">
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="box-content">
+                                        <h3 class="widget-title">补卡申请</h3>
+                                        <form class="contact-form" action="http://localhost:8090/Attendance_war_exploded/RegisterUserServlet?method=findByAddApplication" method="post">
+                                            <fieldset>
+                                                <input type="text" class="username" id="username" name="username" placeholder="用户名">
+                                            </fieldset> 
+                                            <fieldset>
+                                                <input type="date" class="date" id="date" name="date" placeholder="补卡日期">
+                                            </fieldset> 
+                                            <fieldset>
+                                                <i style="font-style: normal;">补卡时间：</i>
+                                                <select name="time">
+                                                    <option value="08:00">上班</option>
+                                                    <option value="18:00">下班</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                            </fieldset>
+                                            <fieldset>
+                                                <textarea name="reason" id="reason" cols="30" rows="4" placeholder="补卡原因"></textarea>
+                                            </fieldset>
+                                            <fieldset>
+                                                <input type="submit" class="button" id="button" value="提交申请">
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="box-content">
+                                        <h3 class="widget-title">注  意</h3>
+                                        <p>1、补卡申请数据请按要求填写完整，否则管理员将拒绝申请。</p>
+                                        <p>2、请注明补卡申请原因。</p>
+                                        <p>3、申请提交后一日内管理员将进行审核，打卡记录中可查看申请结果。</p>
+                                        <p>4、管理员：admin@gmail.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+<!--左侧功能按钮 -->
+                <div class="col-md-3 hidden-sm">
+                    
+                    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+                        <ul class="main-menu">
+                            <li>
+                                <a class="show-1 active homebutton" href="#"><i class="fa fa-arrow-up"></i>上班打卡</a>
+                            </li>
+                            <li>
+                                <a class="show-2 aboutbutton" href="#"><i class="fa fa-arrow-down"></i>下班打卡</a>
+                            </li>
+                            <li>
+                                <a class="show-3 projectbutton" href="#" onclick="ajax('user4')"><i class="fa fa-line-chart"></i>打卡记录</a>
+                            </li>
+                            <li>
+                                <a class="show-5 contactbutton" href="#"><i class="fa fa-table"></i>补卡申请</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+<!-- 底部版权说明-->
+        <div class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Copyright &copy; 2084 Company Name | More Templates <a href="https://www.webmoban.net" target="_blank" title="网站模板">网站模板</a> - Collect from <a href="https://www.webmoban.net" title="网页模板" target="_blank">网页模板</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+
+    <script>
+        //获取当前时间
+        function displayTime(num){
+            if(num == 1){
+                var oPara = document.getElementById("GoToWorkTime");
+            }else{
+                var oPara = document.getElementById("OffWorkTime");
+            }
+            fnDate(oPara); 
+        }
+ 
+        function fnDate(oPara) {
+            
+            var date = new Date();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var time = fnW(hour)+ ":"+ fnW(minute);
+            if(hour<=8||hour>=10){
+                oPara.value = time;
+            }else{
+                alert("不在规定时间内，不可以进行打卡操作！");
+                oPara.value=null;
+            }
+            
+        }
+ 
+        function fnW(str) {
+            var num ;
+            str >= 10? num = str: num = "0" +str ;
+            return num;
+        }
+
+        //获取当前地点
+        function getLocation(num){
+            if(num===1){
+                var mapObj = new AMap.Map('iCenter1');
+                var address=document.getElementById("place1");
+            }else{
+                var mapObj = new AMap.Map('iCenter2');
+                var address=document.getElementById("place2");
+                }
+            
+            mapObj.plugin('AMap.Geolocation', function () {
+                geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+                    timeout: 10000,           // 超过10秒后停止定位，默认：无穷大
+                    maximumAge: 0,            // 定位结果缓存0毫秒，默认：0
+                    convert: true,            // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                    showButton: true,         // 显示定位按钮，默认：true
+                    buttonPosition: 'LB',     // 定位按钮停靠位置，默认：'LB'，左下角
+                    buttonOffset: new AMap.Pixel(0, 0), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                    showMarker: true,         // 定位成功后在定位到的位置显示点标记，默认：true
+                    showCircle: true,         // 定位成功后用圆圈表示定位精度范围，默认：true
+                    panToLocation: true,      // 定位成功后将定位到的位置作为地图中心点，默认：true
+                    zoomToAccuracy:true       // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                });
+                mapObj.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', onComplete); // 返回定位信息
+                AMap.event.addListener(geolocation, 'error', onError);       // 返回定位出错信息
+            });
+ 
+            function onComplete(obj){
+                
+                var res = '经纬度：' + obj.position + 
+                        '\n精度范围：' + obj.accuracy + 
+                        '米\n定位结果的来源：' + obj.location_type + 
+                        '\n状态信息：' + obj.info + 
+                        '\n地址：' + obj.formattedAddress ;
+                alert(res);
+                address.value=obj.formattedAddress;
+            }
+        
+            function onError(obj) {
+                alert(obj.info + '--' + obj.message);
+            }
+        }
+
+        function ajax(user){
+            $.ajax({
+                url: "http://localhost:8090/Attendance_war_exploded/LoginServlet?method=findByUserAttendance",
+                data:{username:user},
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    /*这个方法里是ajax发送请求成功之后执行的代码*/
+                    showData(data);//数据展示
+                },
+                error: function(msg){
+                    alert("ajax连接异常："+msg);
+                }
+            });
+        };
+        //展示数据
+        function showData(data) {
+            var str = "";//定义用于拼接的字符串
+            for (var i = 0; i < data.length; i++) {
+                //拼接表格的行和列
+                str =str+
+                    "<tr>" +
+                    "<td>" + data[i].date + "</td>" +
+                    "<td>" + data[i].time1 + "</td>" +
+                    "<td>" + data[i].place1+"</td>" +
+                    "<td>" + data[i].time2 +"</td>" +
+                    "<td>" + data[i].place2 +"</td>" +
+                    "</tr>";
+            }
+            //追加到table中
+            $("#userAttendance").replaceWith(str);
+        }
+    </script>
+</html>
